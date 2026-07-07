@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>Masuk — Buku Kas Digital Darul Musthofa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -28,8 +29,8 @@
              placeholder="••••••" autocomplete="off" autofocus>
 
       <div id="admin-name-wrap" style="margin-top:14px;">
-        <label class="field-label" for="admin-select">Nama Admin</label>
-        <select id="admin-select" class="field-input"></select>
+        <label class="field-label">Nama Admin</label>
+        <div id="admin-name-display" class="field-input" style="background:var(--dm-emerald-soft); color:var(--dm-emerald-dark); font-weight:600;">Firgiawan Cahyadi</div>
       </div>
 
       <button type="submit" id="login-btn" class="btn btn-primary" style="width:100%; margin-top:20px; padding:12px;">
@@ -49,14 +50,9 @@
 <script src="assets/js/api.js"></script>
 <script src="assets/js/auth.js"></script>
 <script>
-  // Isi dropdown nama admin dari config
-  const adminSelect = document.getElementById("admin-select");
-  CONFIG.DAFTAR_ADMIN.forEach((nama) => {
-    const opt = document.createElement("option");
-    opt.value = nama;
-    opt.textContent = nama;
-    adminSelect.appendChild(opt);
-  });
+  // Nama admin ditetapkan langsung — tidak perlu dropdown, tidak akan pernah kosong
+  const ADMIN_NAME_FIXED = (CONFIG.DAFTAR_ADMIN && CONFIG.DAFTAR_ADMIN[0]) || "Firgiawan Cahyadi";
+  document.getElementById("admin-name-display").textContent = ADMIN_NAME_FIXED;
 
   // Jika sudah login, langsung lempar ke dashboard
   if (Auth.isLoggedIn()) {
@@ -77,7 +73,7 @@
     try {
       const res = await Auth.login(pin);
       if (res.success) {
-        localStorage.setItem(Auth.ADMIN_NAME_KEY, adminSelect.value);
+        localStorage.setItem(Auth.ADMIN_NAME_KEY, ADMIN_NAME_FIXED);
         showToast("Berhasil masuk", "success");
         window.location.href = "dashboard.html";
       } else {

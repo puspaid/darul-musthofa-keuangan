@@ -19,8 +19,8 @@ const CONFIG = {
   KATEGORI_PENGELUARAN: ["Belanja Dapur", "Listrik & Air", "Gaji Pengajar", "Perawatan Gedung", "Lainnya"],
 
   // Nama-nama admin yang boleh login (harus SAMA PERSIS dengan sheet "Admin" di backend)
-  // Ini hanya dipakai untuk mengisi dropdown "Nama Admin" pada form input.
-  DAFTAR_ADMIN: ["Admin Keuangan"],["Firgiawan Cahyadi"],
+  // Ini hanya dipakai untuk mengisi nama admin tetap pada form login & input transaksi.
+  DAFTAR_ADMIN: ["Firgiawan Cahyadi"],
 
   // Berapa lama sesi login (PIN) bertahan di browser (dalam jam) sebelum diminta login ulang
   SESSION_DURATION_HOURS: 12,

@@ -2,7 +2,7 @@ Layout.init("input");
 
 const jenisInput = document.getElementById("jenis-transaksi");
 const kategoriSelect = document.getElementById("input-kategori");
-const adminSelect = document.getElementById("input-admin");
+const adminNameDisplay = document.getElementById("admin-name-display");
 const tabPemasukan = document.getElementById("tab-pemasukan");
 const tabPengeluaran = document.getElementById("tab-pengeluaran");
 const nominalInput = document.getElementById("input-nominal");
@@ -18,14 +18,10 @@ document.getElementById("input-tanggal").addEventListener("change", (e) => {
   document.getElementById("input-hari").value = namaHari(d);
 });
 
-// Isi dropdown admin dari config
-CONFIG.DAFTAR_ADMIN.forEach((nama) => {
-  const opt = document.createElement("option");
-  opt.value = nama;
-  opt.textContent = nama;
-  adminSelect.appendChild(opt);
-});
-if (Auth.getAdminName()) adminSelect.value = Auth.getAdminName();
+// Nama admin ditetapkan langsung — memakai nama yang tersimpan saat login,
+// atau nama pertama di konfigurasi, tanpa dropdown yang bisa gagal terisi
+const ADMIN_NAME_FIXED = Auth.getAdminName() || (CONFIG.DAFTAR_ADMIN && CONFIG.DAFTAR_ADMIN[0]) || "Firgiawan Cahyadi";
+adminNameDisplay.textContent = ADMIN_NAME_FIXED;
 
 function fillKategori(jenis) {
   kategoriSelect.innerHTML = "";
@@ -88,7 +84,7 @@ document.getElementById("transaksi-form").addEventListener("submit", async (e) =
     kategori: kategoriSelect.value,
     nominal,
     keterangan: document.getElementById("input-keterangan").value.trim(),
-    adminPenanggungJawab: adminSelect.value,
+    adminPenanggungJawab: ADMIN_NAME_FIXED,
   };
 
   const fileEl = document.getElementById("input-bukti");
@@ -109,7 +105,6 @@ document.getElementById("transaksi-form").addEventListener("submit", async (e) =
       document.getElementById("input-tanggal").value = todayISO();
       document.getElementById("input-waktu").value = nowTime();
       document.getElementById("input-hari").value = namaHari(new Date());
-      if (Auth.getAdminName()) adminSelect.value = Auth.getAdminName();
     } else {
       showToast(res.message || "Gagal menyimpan transaksi", "error");
     }

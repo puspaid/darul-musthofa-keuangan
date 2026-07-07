@@ -4,6 +4,8 @@
    ========================================================= */
 
 :root{
+  color-scheme: light;
+
   /* Color */
   --dm-emerald:      #0F6E5B;   /* primary — pesantren identity */
   --dm-emerald-dark: #0A4E41;
@@ -155,6 +157,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   transition:border-color .15s ease;
 }
 .field-input:focus{ border-color:var(--dm-emerald); outline:none; box-shadow:0 0 0 3px rgba(15,110,91,0.12); }
+
+/* Paksa tampilan terang pada <select> & isinya — mencegah teks tak terlihat
+   di HP yang mengaktifkan mode gelap/force-dark pada browser */
+select.field-input{
+  background-color:#fff !important;
+  color:var(--dm-text) !important;
+  -webkit-appearance:menulist;
+  appearance:menulist;
+}
+select.field-input option{
+  background-color:#fff !important;
+  color:var(--dm-text) !important;
+}
 
 /* Badge / kategori pill */
 .pill{ display:inline-block; padding:3px 10px; border-radius:99px; font-size:12px; font-weight:600; }
