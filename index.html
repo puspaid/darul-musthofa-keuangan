@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk — Buku Kas Digital Darul Musthofa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="login-shell geo-pattern">
+  <div class="login-card">
+    <div class="login-emblem">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 8v2h20V8L12 2z" fill="#0F6E5B"/>
+        <path d="M4 11v9h16v-9" stroke="#0F6E5B" stroke-width="1.6" fill="none"/>
+        <path d="M9 20v-6h6v6" stroke="#0F6E5B" stroke-width="1.6" fill="none"/>
+      </svg>
+    </div>
+    <h1 class="font-display" style="text-align:center; font-size:19px; font-weight:600; margin:0;">Buku Kas Digital</h1>
+    <p style="text-align:center; color:var(--dm-text-muted); font-size:13.5px; margin-top:4px;">Pondok Pesantren Darul Musthofa</p>
+
+    <form id="login-form" style="margin-top:26px;">
+      <label class="field-label" for="pin-input">Masukkan PIN Admin</label>
+      <input id="pin-input" type="password" maxlength="20"
+             class="field-input" style="letter-spacing:.3em; text-align:center; font-size:20px;"
+             placeholder="••••••" autocomplete="off" autofocus>
+
+      <div id="admin-name-wrap" style="margin-top:14px;">
+        <label class="field-label" for="admin-select">Nama Admin</label>
+        <select id="admin-select" class="field-input"></select>
+      </div>
+
+      <button type="submit" id="login-btn" class="btn btn-primary" style="width:100%; margin-top:20px; padding:12px;">
+        Masuk
+      </button>
+      <p id="login-error" style="color:var(--dm-brick); font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
+    </form>
+
+    <p style="text-align:center; color:var(--dm-text-muted); font-size:11.5px; margin-top:22px;">
+      Akses terbatas hanya untuk admin resmi yayasan.
+    </p>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+  // Isi dropdown nama admin dari config
+  const adminSelect = document.getElementById("admin-select");
+  CONFIG.DAFTAR_ADMIN.forEach((nama) => {
+    const opt = document.createElement("option");
+    opt.value = nama;
+    opt.textContent = nama;
+    adminSelect.appendChild(opt);
+  });
+
+  // Jika sudah login, langsung lempar ke dashboard
+  if (Auth.isLoggedIn()) {
+    window.location.href = "dashboard.html";
+  }
+
+  const form = document.getElementById("login-form");
+  const errorEl = document.getElementById("login-error");
+  const btn = document.getElementById("login-btn");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorEl.style.display = "none";
+    const pin = document.getElementById("pin-input").value.trim();
+    if (!pin) return;
+
+    setButtonLoading(btn, true, "Memeriksa...");
+    try {
+      const res = await Auth.login(pin);
+      if (res.success) {
+        localStorage.setItem(Auth.ADMIN_NAME_KEY, adminSelect.value);
+        showToast("Berhasil masuk", "success");
+        window.location.href = "dashboard.html";
+      } else {
+        errorEl.textContent = res.message || "PIN salah, silakan coba lagi.";
+        errorEl.style.display = "block";
+      }
+    } catch (err) {
+      errorEl.textContent = "Tidak dapat terhubung ke server. Periksa koneksi atau konfigurasi API_URL.";
+      errorEl.style.display = "block";
+    } finally {
+      setButtonLoading(btn, false);
+    }
+  });
+</script>
+</body>
+</html>

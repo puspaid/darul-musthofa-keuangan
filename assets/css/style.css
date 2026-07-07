@@ -1,0 +1,231 @@
+/* =========================================================
+   Buku Kas Digital — Pondok Pesantren Darul Musthofa
+   Design tokens: emerald ledger aesthetic
+   ========================================================= */
+
+:root{
+  /* Color */
+  --dm-emerald:      #0F6E5B;   /* primary — pesantren identity */
+  --dm-emerald-dark: #0A4E41;
+  --dm-emerald-soft: #E4F1EC;   /* tinted surface for income */
+  --dm-gold:         #B8912F;   /* muted gold accent, used sparingly */
+  --dm-gold-soft:    #F6EFDC;
+  --dm-brick:        #B5453A;   /* expenses — muted, not stock red */
+  --dm-brick-soft:   #F7E9E7;
+  --dm-ivory:        #F7F9F7;   /* app background */
+  --dm-surface:      #FFFFFF;
+  --dm-border:       #E3E8E6;
+  --dm-text:         #16241F;
+  --dm-text-muted:   #6B7A75;
+
+  /* Type */
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ledger: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Layout */
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 2px rgba(15,110,91,0.06), 0 8px 24px -12px rgba(15,110,91,0.18);
+  --sidebar-w: 248px;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  background:var(--dm-ivory);
+  color:var(--dm-text);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,.font-display{ font-family:var(--font-display); letter-spacing:-0.01em; }
+.font-ledger{ font-family:var(--font-ledger); font-variant-numeric: tabular-nums; }
+
+/* ---------- Signature: geometric arabesque texture ---------- */
+.geo-pattern{
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 0, transparent 40%, rgba(255,255,255,0.0) 40%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='0.14' stroke-width='1'%3E%3Cpath d='M42 0 L84 42 L42 84 L0 42 Z'/%3E%3Ccircle cx='42' cy='42' r='20'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 84px 84px;
+}
+
+/* ---------- Layout shell ---------- */
+.app-shell{ display:flex; min-height:100vh; }
+
+.sidebar{
+  width:var(--sidebar-w);
+  background:linear-gradient(175deg, var(--dm-emerald) 0%, var(--dm-emerald-dark) 100%);
+  color:#fff;
+  flex-shrink:0;
+  position:fixed;
+  top:0; bottom:0; left:0;
+  display:flex;
+  flex-direction:column;
+  z-index:40;
+  transition:transform .25s ease;
+}
+.sidebar-brand{
+  padding:28px 22px 20px;
+  border-bottom:1px solid rgba(255,255,255,0.14);
+}
+.sidebar-brand .kop{ font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+.sidebar-brand .nama{ font-family:var(--font-display); font-weight:600; font-size:17px; line-height:1.25; margin-top:2px;}
+
+.nav-item{
+  display:flex; align-items:center; gap:12px;
+  padding:11px 22px;
+  color:rgba(255,255,255,0.78);
+  font-size:14.5px; font-weight:500;
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all .15s ease;
+}
+.nav-item:hover{ background:rgba(255,255,255,0.08); color:#fff; }
+.nav-item.active{ background:rgba(255,255,255,0.12); color:#fff; border-left-color:var(--dm-gold); }
+.nav-item svg{ width:18px; height:18px; flex-shrink:0; }
+
+.sidebar-footer{
+  margin-top:auto; padding:16px 22px 22px;
+  border-top:1px solid rgba(255,255,255,0.14);
+}
+
+.main-content{
+  margin-left:var(--sidebar-w);
+  flex:1;
+  min-width:0;
+  padding:28px 32px 60px;
+}
+
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:24px;
+  gap:16px;
+}
+
+.hamburger-btn{ display:none; }
+
+/* ---------- Cards ---------- */
+.card{
+  background:var(--dm-surface);
+  border:1px solid var(--dm-border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+}
+
+.stat-card{
+  padding:20px 22px;
+  position:relative;
+  overflow:hidden;
+}
+.stat-card .stat-label{ font-size:12.5px; color:var(--dm-text-muted); font-weight:500; }
+.stat-card .stat-value{ font-family:var(--font-ledger); font-size:26px; font-weight:600; margin-top:6px; }
+.stat-card.income .stat-value{ color:var(--dm-emerald); }
+.stat-card.expense .stat-value{ color:var(--dm-brick); }
+.stat-card.balance .stat-value{ color:var(--dm-text); }
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:14px;
+  padding:10px 18px; border-radius:10px; border:1px solid transparent;
+  cursor:pointer; transition:all .15s ease; white-space:nowrap;
+}
+.btn-primary{ background:var(--dm-emerald); color:#fff; }
+.btn-primary:hover{ background:var(--dm-emerald-dark); }
+.btn-secondary{ background:#fff; color:var(--dm-emerald); border-color:var(--dm-border); }
+.btn-secondary:hover{ background:var(--dm-emerald-soft); }
+.btn-gold{ background:var(--dm-gold); color:#fff; }
+.btn-gold:hover{ filter:brightness(0.93); }
+.btn-danger-outline{ background:#fff; color:var(--dm-brick); border-color:var(--dm-brick-soft); }
+.btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+/* focus visibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--dm-gold); outline-offset:2px;
+}
+
+/* ---------- Forms ---------- */
+.field-label{ font-size:13px; font-weight:600; color:var(--dm-text); margin-bottom:6px; display:block; }
+.field-input{
+  width:100%; padding:10px 12px; border:1px solid var(--dm-border); border-radius:9px;
+  font-family:var(--font-body); font-size:14.5px; background:#fff; color:var(--dm-text);
+  transition:border-color .15s ease;
+}
+.field-input:focus{ border-color:var(--dm-emerald); outline:none; box-shadow:0 0 0 3px rgba(15,110,91,0.12); }
+
+/* Badge / kategori pill */
+.pill{ display:inline-block; padding:3px 10px; border-radius:99px; font-size:12px; font-weight:600; }
+.pill-income{ background:var(--dm-emerald-soft); color:var(--dm-emerald-dark); }
+.pill-expense{ background:var(--dm-brick-soft); color:var(--dm-brick); }
+.pill-gold{ background:var(--dm-gold-soft); color:var(--dm-gold); }
+
+/* ---------- Table ---------- */
+.dm-table{ width:100%; border-collapse:collapse; font-size:14px; }
+.dm-table th{
+  text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--dm-text-muted); padding:10px 14px; border-bottom:1px solid var(--dm-border); font-weight:600;
+}
+.dm-table td{ padding:12px 14px; border-bottom:1px solid var(--dm-border); vertical-align:middle; }
+.dm-table tr:last-child td{ border-bottom:none; }
+.dm-table .ref-id{ font-family:var(--font-ledger); font-size:12.5px; color:var(--dm-text-muted); }
+
+/* ---------- Toast ---------- */
+#toast-container{ position:fixed; top:20px; right:20px; z-index:100; display:flex; flex-direction:column; gap:10px; }
+.toast{
+  min-width:260px; max-width:340px; padding:13px 16px; border-radius:11px; color:#fff;
+  font-size:14px; font-weight:500; box-shadow:0 10px 30px -8px rgba(0,0,0,0.25);
+  display:flex; align-items:flex-start; gap:10px;
+  animation:toast-in .22s ease;
+}
+@keyframes toast-in{ from{ opacity:0; transform:translateY(-8px);} to{opacity:1; transform:translateY(0);} }
+.toast.success{ background:var(--dm-emerald-dark); }
+.toast.error{ background:var(--dm-brick); }
+.toast.info{ background:#2b3a45; }
+
+/* ---------- Spinner ---------- */
+.spinner{
+  width:18px; height:18px; border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.4); border-top-color:#fff;
+  animation:spin .7s linear infinite;
+}
+.spinner-dark{ border-color:rgba(15,110,91,0.25); border-top-color:var(--dm-emerald); }
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* ---------- Login page ---------- */
+.login-shell{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(160deg, var(--dm-emerald) 0%, var(--dm-emerald-dark) 65%, #082e26 100%);
+  padding:20px;
+}
+.login-card{
+  width:100%; max-width:380px; background:#fff; border-radius:20px;
+  padding:36px 32px 32px; box-shadow:0 30px 60px -20px rgba(0,0,0,0.4);
+}
+.login-emblem{
+  width:56px; height:56px; border-radius:14px; background:var(--dm-emerald-soft);
+  display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
+}
+
+/* PIN input dots */
+.pin-dots{ display:flex; gap:10px; justify-content:center; margin:18px 0; }
+.pin-dot{ width:14px; height:14px; border-radius:50%; border:2px solid var(--dm-border); transition:all .12s ease; }
+.pin-dot.filled{ background:var(--dm-emerald); border-color:var(--dm-emerald); }
+
+/* ---------- Empty state ---------- */
+.empty-state{ text-align:center; padding:48px 20px; color:var(--dm-text-muted); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px){
+  .sidebar{ transform:translateX(-100%); }
+  .sidebar.open{ transform:translateX(0); }
+  .main-content{ margin-left:0; padding:20px 16px 60px; }
+  .hamburger-btn{ display:inline-flex; }
+  .sidebar-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:35; }
+  .sidebar-overlay.open{ display:block; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}

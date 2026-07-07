@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan — Buku Kas Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="hamburger-btn btn btn-secondary" style="padding:8px 10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <h1 class="font-display" style="font-size:20px; font-weight:600; margin:0;">Laporan Keuangan</h1>
+          <p style="color:var(--dm-text-muted); font-size:13px; margin:2px 0 0;">Rekap real-time berdasarkan periode</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="card" style="padding:16px 20px; display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; margin-bottom:20px;">
+      <div>
+        <label class="field-label">Periode</label>
+        <select id="filter-periode" class="field-input">
+          <option value="harian">Harian</option>
+          <option value="mingguan">Mingguan</option>
+          <option value="bulanan" selected>Bulanan</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="filter-tanggal">Tanggal Acuan</label>
+        <input id="filter-tanggal" type="date" class="field-input">
+      </div>
+      <button id="apply-filter-btn" class="btn btn-primary">Tampilkan</button>
+      <div style="margin-left:auto; display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="generate-btn" class="btn btn-gold">Generate &amp; Simpan Laporan ke Drive</button>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:20px;">
+      <div class="card stat-card income">
+        <div class="stat-label">Pemasukan Periode Ini</div>
+        <div class="stat-value" id="sum-income">Rp 0</div>
+      </div>
+      <div class="card stat-card expense">
+        <div class="stat-label">Pengeluaran Periode Ini</div>
+        <div class="stat-value" id="sum-expense">Rp 0</div>
+      </div>
+      <div class="card stat-card balance">
+        <div class="stat-label">Selisih (Net)</div>
+        <div class="stat-value" id="sum-net">Rp 0</div>
+      </div>
+    </div>
+
+    <!-- Share panel (appears after a report has been generated) -->
+    <div class="card" id="share-panel" style="display:none; padding:16px 20px; margin-bottom:20px; background:var(--dm-gold-soft); border-color:#EBDDAF;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div style="font-weight:600; font-size:14px;">Laporan berhasil diarsipkan ke Google Drive</div>
+          <div style="font-size:12.5px; color:var(--dm-text-muted);" id="share-filename"></div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button id="copy-link-btn" class="btn btn-secondary">Salin Link</button>
+          <a id="whatsapp-share-btn" class="btn btn-primary" target="_blank" style="text-decoration:none;">Bagikan via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div style="overflow-x:auto;">
+        <table class="dm-table">
+          <thead>
+            <tr>
+              <th>No. Ref</th><th>Tanggal</th><th>Jenis</th><th>Kategori</th>
+              <th>Keterangan</th><th>Admin</th><th style="text-align:right;">Nominal</th><th>Bukti</th>
+            </tr>
+          </thead>
+          <tbody id="laporan-tbody">
+            <tr><td colspan="8"><div class="empty-state">Memuat data...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/laporan.js"></script>
+</body>
+</html>
