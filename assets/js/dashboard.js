@@ -61,11 +61,11 @@ function renderRecent(list) {
   }
   tbody.innerHTML = list.map((t) => `
     <tr>
-      <td class="ref-id">${t.noRef}</td>
-      <td>${formatTanggalIndo(t.tanggal)}</td>
-      <td><span class="pill ${t.jenis === "Pemasukan" ? "pill-income" : "pill-expense"}">${t.kategori}</span></td>
-      <td>${t.keterangan || "-"}</td>
-      <td style="text-align:right; font-family:var(--font-ledger); color:${t.jenis === "Pemasukan" ? "var(--dm-emerald)" : "var(--dm-brick)"};">
+      <td class="ref-id" data-label="No. Ref">${t.noRef}</td>
+      <td data-label="Tanggal">${formatTanggalIndo(t.tanggal)}</td>
+      <td data-label="Kategori"><span class="pill ${t.jenis === "Pemasukan" ? "pill-income" : "pill-expense"}">${t.kategori}</span></td>
+      <td data-label="Keterangan">${t.keterangan || "-"}</td>
+      <td data-label="Nominal" style="text-align:right; font-family:var(--font-ledger); color:${t.jenis === "Pemasukan" ? "var(--dm-emerald)" : "var(--dm-brick)"};">
         ${t.jenis === "Pemasukan" ? "+" : "-"} ${formatRupiah(t.nominal)}
       </td>
     </tr>`).join("");

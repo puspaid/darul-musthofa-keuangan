@@ -102,6 +102,7 @@ h1,h2,h3,.font-display{ font-family:var(--font-display); letter-spacing:-0.01em;
   display:flex; align-items:center; justify-content:space-between;
   margin-bottom:24px;
   gap:16px;
+  flex-wrap:wrap;
 }
 
 .hamburger-btn{ display:none; }
@@ -216,6 +217,60 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* ---------- Empty state ---------- */
 .empty-state{ text-align:center; padding:48px 20px; color:var(--dm-text-muted); }
 
+/* ---------- Form helper grid (used on Input Transaksi) ---------- */
+.form-row-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+/* ---------- Action toolbar (buttons that should wrap nicely & stack on mobile) ---------- */
+.action-toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+/* =========================================================
+   Report / Share Card — dirancang agar rapi saat discreenshot
+   atau diunduh sebagai gambar (JPG/PNG)
+   ========================================================= */
+.report-card{
+  background:var(--dm-surface);
+  border:1px solid var(--dm-border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  max-width:640px;
+  margin:0 auto 20px;
+}
+.report-card-header{
+  background:linear-gradient(175deg, var(--dm-emerald) 0%, var(--dm-emerald-dark) 100%);
+  color:#fff;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.report-emblem{
+  width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.16);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.report-card-header .kop{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,0.72); }
+.report-card-header .judul{ font-family:var(--font-display); font-weight:600; font-size:17px; line-height:1.25; margin-top:2px; }
+.report-meta-row{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  padding:14px 24px; background:var(--dm-ivory); border-bottom:1px solid var(--dm-border);
+  font-size:12.5px; color:var(--dm-text-muted);
+}
+.report-meta-row strong{ color:var(--dm-text); font-weight:600; }
+.report-stat-grid{
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px;
+  background:var(--dm-border);
+}
+.report-stat-cell{ background:var(--dm-surface); padding:18px 14px; text-align:center; }
+.report-stat-cell .lbl{ font-size:11.5px; color:var(--dm-text-muted); font-weight:500; }
+.report-stat-cell .val{ font-family:var(--font-ledger); font-size:17px; font-weight:700; margin-top:6px; word-break:break-word; }
+.report-stat-cell.income .val{ color:var(--dm-emerald); }
+.report-stat-cell.expense .val{ color:var(--dm-brick); }
+.report-stat-cell.balance .val{ color:var(--dm-text); }
+.report-card-footer{
+  padding:12px 24px 18px; text-align:center;
+  font-size:11px; color:var(--dm-text-muted);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px){
   .sidebar{ transform:translateX(-100%); }
@@ -226,6 +281,49 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .sidebar-overlay.open{ display:block; }
 }
 
+@media (max-width: 640px){
+  .main-content{ padding:16px 12px 48px; }
+  .topbar{ align-items:flex-start; }
+  .topbar h1{ font-size:18px !important; }
+  .card{ border-radius:14px; }
+  .stat-card{ padding:16px 16px; }
+  .stat-card .stat-value{ font-size:21px; }
+  .form-row-2{ grid-template-columns:1fr; }
+  .action-toolbar{ width:100%; }
+  .action-toolbar .btn{ flex:1 1 auto; }
+  .report-stat-grid{ grid-template-columns:1fr; }
+  .report-card-header{ padding:18px 18px; }
+  .report-meta-row{ padding:12px 18px; flex-direction:column; }
+
+  /* Turn tables into stacked "card" rows so nothing gets clipped on a phone */
+  .dm-table.dm-table-stack thead{ display:none; }
+  .dm-table.dm-table-stack, .dm-table.dm-table-stack tbody, .dm-table.dm-table-stack tr, .dm-table.dm-table-stack td{
+    display:block; width:100%;
+  }
+  .dm-table.dm-table-stack tr{
+    border-bottom:1px solid var(--dm-border); padding:12px 14px;
+  }
+  .dm-table.dm-table-stack tr:last-child{ border-bottom:none; }
+  .dm-table.dm-table-stack td{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:4px 0; border-bottom:none; text-align:right;
+  }
+  .dm-table.dm-table-stack td::before{
+    content:attr(data-label);
+    font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--dm-text-muted); text-align:left; flex-shrink:0;
+  }
+  .dm-table.dm-table-stack td[data-label=""]::before,
+  .dm-table.dm-table-stack td:not([data-label])::before{ content:none; }
+}
+
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}
+
+/* ---------- Print (opsional, jika halaman laporan dicetak/PDF) ---------- */
+@media print{
+  .sidebar, .hamburger-btn, .action-toolbar, .topbar, #toast-container{ display:none !important; }
+  .main-content{ margin-left:0 !important; padding:0 !important; }
+  .report-card{ box-shadow:none; }
 }

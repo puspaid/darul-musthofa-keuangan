@@ -2,10 +2,6 @@ Layout.init("input");
 
 const jenisInput = document.getElementById("jenis-transaksi");
 const kategoriSelect = document.getElementById("input-kategori");
-const kategoriCustomWrap = document.getElementById("kategori-custom-wrap");
-const kategoriCustomInput = document.getElementById("input-kategori-custom");
-const KATEGORI_CUSTOM_VALUE = "__CUSTOM__";
-
 const adminSelect = document.getElementById("input-admin");
 const tabPemasukan = document.getElementById("tab-pemasukan");
 const tabPengeluaran = document.getElementById("tab-pengeluaran");
@@ -40,23 +36,7 @@ function fillKategori(jenis) {
     opt.textContent = k;
     kategoriSelect.appendChild(opt);
   });
-
-  const optCustom = document.createElement("option");
-  optCustom.value = KATEGORI_CUSTOM_VALUE;
-  optCustom.textContent = "+ Kategori lain (tulis sendiri)";
-  kategoriSelect.appendChild(optCustom);
-
-  toggleKategoriCustom();
 }
-
-function toggleKategoriCustom() {
-  const isCustom = kategoriSelect.value === KATEGORI_CUSTOM_VALUE;
-  kategoriCustomWrap.style.display = isCustom ? "block" : "none";
-  kategoriCustomInput.required = isCustom;
-  if (!isCustom) kategoriCustomInput.value = "";
-}
-
-kategoriSelect.addEventListener("change", toggleKategoriCustom);
 
 function setTab(jenis) {
   jenisInput.value = jenis;
@@ -100,21 +80,12 @@ document.getElementById("transaksi-form").addEventListener("submit", async (e) =
     return;
   }
 
-  let kategoriFinal = kategoriSelect.value;
-  if (kategoriFinal === KATEGORI_CUSTOM_VALUE) {
-    kategoriFinal = kategoriCustomInput.value.trim();
-    if (!kategoriFinal) {
-      showToast("Kategori tulisan sendiri tidak boleh kosong", "error");
-      return;
-    }
-  }
-
   const payload = {
     jenis: jenisInput.value,
     hari: document.getElementById("input-hari").value,
     tanggal: document.getElementById("input-tanggal").value,
     waktu: document.getElementById("input-waktu").value,
-    kategori: kategoriFinal,
+    kategori: kategoriSelect.value,
     nominal,
     keterangan: document.getElementById("input-keterangan").value.trim(),
     adminPenanggungJawab: adminSelect.value,
@@ -139,7 +110,6 @@ document.getElementById("transaksi-form").addEventListener("submit", async (e) =
       document.getElementById("input-waktu").value = nowTime();
       document.getElementById("input-hari").value = namaHari(new Date());
       if (Auth.getAdminName()) adminSelect.value = Auth.getAdminName();
-      toggleKategoriCustom();
     } else {
       showToast(res.message || "Gagal menyimpan transaksi", "error");
     }

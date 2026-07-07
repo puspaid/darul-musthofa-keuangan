@@ -26,16 +26,16 @@
     </div>
 
     <!-- Tab switch -->
-    <div class="card" style="padding:6px; display:inline-flex; gap:4px; margin-bottom:20px;">
-      <button id="tab-pemasukan" class="btn" style="background:var(--dm-emerald); color:#fff;">Pemasukan</button>
-      <button id="tab-pengeluaran" class="btn btn-secondary" style="border:none;">Pengeluaran</button>
+    <div class="card" style="padding:6px; display:flex; gap:4px; margin-bottom:20px; max-width:360px;">
+      <button id="tab-pemasukan" class="btn" style="background:var(--dm-emerald); color:#fff; flex:1;">Pemasukan</button>
+      <button id="tab-pengeluaran" class="btn btn-secondary" style="border:none; flex:1;">Pengeluaran</button>
     </div>
 
     <div class="card" style="padding:26px; max-width:640px;">
       <form id="transaksi-form">
         <input type="hidden" id="jenis-transaksi" value="Pemasukan">
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="form-row-2">
           <div>
             <label class="field-label">Hari</label>
             <input id="input-hari" class="field-input" disabled>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+        <div class="form-row-2" style="margin-top:14px;">
           <div>
             <label class="field-label" for="input-waktu">Waktu</label>
             <input id="input-waktu" type="time" class="field-input" required>
@@ -55,11 +55,6 @@
             <label class="field-label" for="input-kategori">Kategori</label>
             <select id="input-kategori" class="field-input" required></select>
           </div>
-        </div>
-
-        <div id="kategori-custom-wrap" style="margin-top:14px; display:none;">
-          <label class="field-label" for="input-kategori-custom">Tulis Kategori Sendiri</label>
-          <input id="input-kategori-custom" class="field-input" placeholder="Contoh: Sumbangan Alat Sholat">
         </div>
 
         <div style="margin-top:14px;">

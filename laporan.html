@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div class="app-shell">
@@ -40,35 +41,65 @@
         <input id="filter-tanggal" type="date" class="field-input">
       </div>
       <button id="apply-filter-btn" class="btn btn-primary">Tampilkan</button>
-      <div style="margin-left:auto; display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="generate-btn" class="btn btn-gold">Generate &amp; Simpan Laporan ke Drive</button>
-      </div>
     </div>
 
-    <!-- Summary -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:20px;">
-      <div class="card stat-card income">
-        <div class="stat-label">Pemasukan Periode Ini</div>
-        <div class="stat-value" id="sum-income">Rp 0</div>
+    <!-- Kartu Laporan — didesain rapi untuk discreenshot / diunduh sebagai gambar -->
+    <div class="report-card" id="report-card">
+      <div class="report-card-header">
+        <div class="report-emblem">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 8v2h20V8L12 2z" fill="#fff"/>
+            <path d="M4 11v9h16v-9" stroke="#fff" stroke-width="1.6" fill="none"/>
+            <path d="M9 20v-6h6v6" stroke="#fff" stroke-width="1.6" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="kop" id="report-kop">Pondok Pesantren Darul Musthofa</div>
+          <div class="judul" id="report-judul">Laporan Keuangan</div>
+        </div>
       </div>
-      <div class="card stat-card expense">
-        <div class="stat-label">Pengeluaran Periode Ini</div>
-        <div class="stat-value" id="sum-expense">Rp 0</div>
+      <div class="report-meta-row">
+        <div>Periode: <strong id="report-periode">-</strong></div>
+        <div>Jumlah Transaksi: <strong id="report-jumlah">0</strong></div>
       </div>
-      <div class="card stat-card balance">
-        <div class="stat-label">Selisih (Net)</div>
-        <div class="stat-value" id="sum-net">Rp 0</div>
+      <div class="report-stat-grid">
+        <div class="report-stat-cell income">
+          <div class="lbl">Pemasukan</div>
+          <div class="val" id="sum-income">Rp 0</div>
+        </div>
+        <div class="report-stat-cell expense">
+          <div class="lbl">Pengeluaran</div>
+          <div class="val" id="sum-expense">Rp 0</div>
+        </div>
+        <div class="report-stat-cell balance">
+          <div class="lbl">Selisih (Net)</div>
+          <div class="val" id="sum-net">Rp 0</div>
+        </div>
       </div>
+      <div class="report-card-footer" id="report-footer">Dibuat otomatis melalui Buku Kas Digital</div>
     </div>
 
-    <!-- Share panel (appears after a report has been generated) -->
+    <!-- Toolbar berbagi laporan -->
+    <div class="card action-toolbar" style="padding:14px 16px; margin-bottom:20px;">
+      <button id="download-image-btn" class="btn btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        Unduh sebagai Gambar
+      </button>
+      <button id="share-image-btn" class="btn btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a3 3 0 100-6 3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zm12 6a3 3 0 100-6 3 3 0 000 6zM8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5"/></svg>
+        Bagikan Laporan
+      </button>
+      <button id="generate-btn" class="btn btn-primary" style="margin-left:auto;">Simpan ke Drive</button>
+    </div>
+
+    <!-- Info setelah diarsipkan ke Drive -->
     <div class="card" id="share-panel" style="display:none; padding:16px 20px; margin-bottom:20px; background:var(--dm-gold-soft); border-color:#EBDDAF;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div>
           <div style="font-weight:600; font-size:14px;">Laporan berhasil diarsipkan ke Google Drive</div>
           <div style="font-size:12.5px; color:var(--dm-text-muted);" id="share-filename"></div>
         </div>
-        <div style="display:flex; gap:8px;">
+        <div class="action-toolbar">
           <button id="copy-link-btn" class="btn btn-secondary">Salin Link</button>
           <a id="whatsapp-share-btn" class="btn btn-primary" target="_blank" style="text-decoration:none;">Bagikan via WhatsApp</a>
         </div>
@@ -78,7 +109,7 @@
     <!-- Table -->
     <div class="card">
       <div style="overflow-x:auto;">
-        <table class="dm-table">
+        <table class="dm-table dm-table-stack">
           <thead>
             <tr>
               <th>No. Ref</th><th>Tanggal</th><th>Jenis</th><th>Kategori</th>
