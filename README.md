@@ -111,7 +111,7 @@ aplikasi internal seperti ini.
 
 ##  Tentang Pengembang
 
-Dibangun oleh **Fidyah Kumala Puspa Ratih** — pendidik & digital developer di
+Dibangun oleh **Puspa Ratih** — pendidik & digital developer di
 Yayasan Darul Musthofa, mahasiswa Teknologi Pendidikan Universitas Terbuka.
 Proyek ini merupakan bagian dari inisiatif digitalisasi administrasi pesantren
 yang dikerjakan secara mandiri, mencakup perancangan sistem, backend, hingga
