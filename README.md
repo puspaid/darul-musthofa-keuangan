@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📗 Buku Kas Digital — Pondok Pesantren Darul Musthofa
+#  Buku Kas Digital — Pondok Pesantren Darul Musthofa
 
 **Aplikasi pembukuan keuangan (pemasukan & pengeluaran) berbasis web, tanpa biaya hosting database, dibangun di atas ekosistem Google Workspace.**
 
@@ -15,7 +15,7 @@
 
 ---
 
-## 📌 Ringkasan
+##  Ringkasan
 
 Pondok Pesantren Darul Musthofa membutuhkan sistem pembukuan yang **rapi, real-time, dan bisa diakses tanpa biaya server bulanan**. Proyek ini menjawab kebutuhan tersebut dengan arsitektur *serverless*: frontend statis di GitHub Pages, dan Google Sheets + Google Drive sebagai database & penyimpanan file — dijembatani oleh Google Apps Script sebagai REST API.
 
@@ -23,23 +23,23 @@ Dibangun end-to-end: dari desain sistem, skema database, autentikasi, hingga UI/
 
 ---
 
-## ✨ Fitur Utama
+##  Fitur Utama
 
 | Fitur | Deskripsi |
 |---|---|
-| 📊 **Dashboard Real-Time** | Ringkasan saldo, total pemasukan/pengeluaran bulan berjalan, dan grafik tren 12 bulan (Chart.js) |
-| ✍️ **Input Transaksi Terstruktur** | Form terpisah pemasukan (SPP, Donasi, Unit Usaha) & pengeluaran (dapur, listrik, gaji, dll) dengan validasi |
-| 🧾 **Nomor Referensi Otomatis** | Setiap transaksi mendapat ID unik, contoh: `DM-IN-20260707-001` |
-| 📎 **Upload Bukti ke Google Drive** | Foto nota/transfer otomatis tersimpan & tertaut ke Google Drive, terorganisir per tahun/bulan |
-| 📅 **Filter Multi-Periode** | Rekap Harian / Mingguan / Bulanan dihitung real-time dari data harian |
-| 📈 **Rekap Otomatis** | Setiap input baru langsung memicu kalkulasi ulang rekap bulanan & tahunan di backend |
-| 📤 **Laporan yang Bisa Dibagikan** | Generate laporan resmi ke Google Sheet arsip + bagikan via WhatsApp/link view-only |
-| 💰 **Auto-Format Rupiah** | Input nominal otomatis berformat ribuan (`Rp 1.500.000`) untuk mencegah salah ketik |
-| 🔐 **Proteksi PIN Bertingkat** | Token sesi ditandatangani (HMAC) & kedaluwarsa otomatis — aman meski kode berada di repo publik |
+|  **Dashboard Real-Time** | Ringkasan saldo, total pemasukan/pengeluaran bulan berjalan, dan grafik tren 12 bulan (Chart.js) |
+|  **Input Transaksi Terstruktur** | Form terpisah pemasukan (SPP, Donasi, Unit Usaha) & pengeluaran (dapur, listrik, gaji, dll) dengan validasi |
+|  **Nomor Referensi Otomatis** | Setiap transaksi mendapat ID unik, contoh: `DM-IN-20260707-001` |
+|  **Upload Bukti ke Google Drive** | Foto nota/transfer otomatis tersimpan & tertaut ke Google Drive, terorganisir per tahun/bulan |
+|  **Filter Multi-Periode** | Rekap Harian / Mingguan / Bulanan dihitung real-time dari data harian |
+|  **Rekap Otomatis** | Setiap input baru langsung memicu kalkulasi ulang rekap bulanan & tahunan di backend |
+|  **Laporan yang Bisa Dibagikan** | Generate laporan resmi ke Google Sheet arsip + bagikan via WhatsApp/link view-only |
+|  **Auto-Format Rupiah** | Input nominal otomatis berformat ribuan (`Rp 1.500.000`) untuk mencegah salah ketik |
+|  **Proteksi PIN Bertingkat** | Token sesi ditandatangani (HMAC) & kedaluwarsa otomatis — aman meski kode berada di repo publik |
 
 ---
 
-## 🏗️ Arsitektur
+##  Arsitektur
 
 ```
 ┌─────────────────────┐         HTTPS (fetch)        ┌──────────────────────────┐
@@ -59,7 +59,7 @@ Dibangun end-to-end: dari desain sistem, skema database, autentikasi, hingga UI/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend:** HTML5, Tailwind CSS, Vanilla JavaScript (ES6+), Chart.js
 - **Backend:** Google Apps Script (V8 runtime)
@@ -70,7 +70,7 @@ Dibangun end-to-end: dari desain sistem, skema database, autentikasi, hingga UI/
 
 ---
 
-## 📂 Struktur Proyek
+##  Struktur Proyek
 
 ```
 darul-musthofa-keuangan/
@@ -88,7 +88,7 @@ darul-musthofa-keuangan/
 
 ---
 
-## 🚀 Menjalankan Proyek Ini
+##  Menjalankan Proyek Ini
 
 Panduan instalasi lengkap (setup Google Sheets, Apps Script, Script Properties,
 hingga deploy ke GitHub Pages) tersedia di [`SETUP.md`](./SETUP.md).
@@ -100,7 +100,7 @@ Ringkas:
 
 ---
 
-## 🔒 Catatan Keamanan
+##  Catatan Keamanan
 
 Karena frontend bersifat publik (GitHub Pages), PIN admin **tidak pernah disimpan
 di kode**. PIN diverifikasi sepenuhnya di backend dan menghasilkan token sesi
@@ -109,7 +109,7 @@ aplikasi internal seperti ini.
 
 ---
 
-## 👩‍💻 Tentang Pengembang
+##  Tentang Pengembang
 
 Dibangun oleh **Fidyah Kumala Puspa Ratih** — pendidik & digital developer di
 Yayasan Darul Musthofa, mahasiswa Teknologi Pendidikan Universitas Terbuka.
@@ -117,10 +117,10 @@ Proyek ini merupakan bagian dari inisiatif digitalisasi administrasi pesantren
 yang dikerjakan secara mandiri, mencakup perancangan sistem, backend, hingga
 antarmuka pengguna.
 
-📫 Proyek terkait lainnya: *Portal Digital Santri*, *Ready to Perform! (AI Career Prediction)*
+Proyek terkait lainnya: *Portal Digital Santri*, *Ready to Perform! (AI Career Prediction)*
 
 ---
 
 <div align="center">
-<sub>Dibuat dengan 🤍 untuk kemajuan administrasi pesantren.</sub>
+<sub>Dibuat dengan ikhlas untuk kemajuan administrasi pesantren.</sub>
 </div>
